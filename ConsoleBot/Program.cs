@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using AIMLbot;
+using System.IO;
 
 namespace ConsoleBot
 {
@@ -9,8 +10,10 @@ namespace ConsoleBot
     {
         static void Main(string[] args)
         {
+            string settingsPath = Path.Combine(Environment.CurrentDirectory, Path.Combine("config", "Settings.xml"));
+
             Bot myBot = new Bot();
-            myBot.loadSettings();
+            myBot.loadSettings(settingsPath);
             User myUser = new User("consoleUser", myBot);
             myBot.isAcceptingUserInput = false;
             myBot.loadAIMLFromFiles();

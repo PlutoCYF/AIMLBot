@@ -255,6 +255,8 @@ namespace AIMLbot
             }
         }
 
+        public string PathToXXXOverride = null;
+
         /// <summary>
         /// The directory to look in for the AIML files
         /// </summary>
@@ -262,7 +264,10 @@ namespace AIMLbot
         {
             get
             {
-                return Path.Combine(Environment.CurrentDirectory, this.GlobalSettings.grabSetting("aimldirectory"));
+                if (PathToXXXOverride != null)
+                    return Path.Combine(PathToXXXOverride, this.GlobalSettings.grabSetting("aimldirectory"));
+                else
+                    return Path.Combine(Environment.CurrentDirectory, this.GlobalSettings.grabSetting("aimldirectory"));
             }
         }
 
@@ -273,7 +278,11 @@ namespace AIMLbot
         {
             get
             {
-                return Path.Combine(Environment.CurrentDirectory, this.GlobalSettings.grabSetting("configdirectory"));
+                if (PathToXXXOverride != null)
+                    return Path.Combine(PathToXXXOverride, this.GlobalSettings.grabSetting("configdirectory"));
+                else
+                    return Path.Combine(Environment.CurrentDirectory, this.GlobalSettings.grabSetting("configdirectory"));
+
             }
         }
 
@@ -284,7 +293,10 @@ namespace AIMLbot
         {
             get
             {
-                return Path.Combine(Environment.CurrentDirectory, this.GlobalSettings.grabSetting("logdirectory"));
+                if (PathToXXXOverride != null)
+                    return Path.Combine(PathToXXXOverride, this.GlobalSettings.grabSetting("logdirectory"));
+                else
+                    return Path.Combine(Environment.CurrentDirectory, this.GlobalSettings.grabSetting("logdirectory"));
             }
         }
 
@@ -373,16 +385,6 @@ namespace AIMLbot
             this.DefaultPredicates = new SettingsDictionary(this);
             this.CustomTags = new Dictionary<string, TagHandler>();
             this.Graphmaster = new AIMLbot.Utils.Node();
-        }
-
-        /// <summary>
-        /// Loads settings based upon the default location of the Settings.xml file
-        /// </summary>
-        public void loadSettings()
-        {
-            // try a safe default setting for the settings xml file
-            string path = Path.Combine(Environment.CurrentDirectory, Path.Combine("config", "Settings.xml"));
-            this.loadSettings(path);
         }
 
         /// <summary>
