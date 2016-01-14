@@ -88,12 +88,12 @@ namespace AIMLbot.Utils
         /// Given the content of an AIML file, attempts to load it into the graphmaster
         /// </summary>
         /// <param name="xml">The xml of the file to process</param>
-        public void loadAIMLFromString(string xml)
+        public void loadAIMLFromXML(string xml, string filename)
         {
             // load the document
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(xml);
-            this.loadAIMLFromXML(doc, "");
+            this.loadAIMLFromXML(doc, filename);
         }
 
         /// <summary>
