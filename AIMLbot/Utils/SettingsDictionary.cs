@@ -12,9 +12,6 @@ namespace AIMLbot.Utils
     /// </summary>
     public class SettingsDictionary
     {
-        public delegate string SettingsLoaderOverrideDelegeate(string filepath);
-        public static SettingsLoaderOverrideDelegeate SettingsLoaderOverride = null;
-
         #region Attributes
 
         /// <summary>
@@ -97,11 +94,11 @@ namespace AIMLbot.Utils
         /// <param name="pathToSettings">The file containing the settings</param>
         public void loadSettings(string pathToSettings)
         {
-            if (SettingsLoaderOverride != null)
+            if (bot.FileLoaderOverride != null)
             {
-                var content = SettingsLoaderOverride(pathToSettings);
+                var content = bot.FileLoaderOverride(pathToSettings);
                 XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.Load(content);
+                xmlDoc.LoadXml(content);
                 this.loadSettings(xmlDoc);
             }
             else if (pathToSettings.Length > 0)

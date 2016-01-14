@@ -77,11 +77,23 @@ namespace AIMLbot.Utils
         public void loadAIMLFile(string filename)
         {
             this.bot.writeToLog("Processing AIML file: " + filename);
-            
+
             // load the document
             XmlDocument doc = new XmlDocument();
             doc.Load(filename);
             this.loadAIMLFromXML(doc, filename);
+        }
+
+        /// <summary>
+        /// Given the content of an AIML file, attempts to load it into the graphmaster
+        /// </summary>
+        /// <param name="xml">The xml of the file to process</param>
+        public void loadAIMLFromString(string xml)
+        {
+            // load the document
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml);
+            this.loadAIMLFromXML(doc, "");
         }
 
         /// <summary>
@@ -119,8 +131,8 @@ namespace AIMLbot.Utils
         private void processTopic(XmlNode node, string filename)
         {
             // find the name of the topic or set to default "*"
-            string topicName="*";
-            if((node.Attributes.Count==1)&(node.Attributes[0].Name=="name"))
+            string topicName = "*";
+            if ((node.Attributes.Count == 1) & (node.Attributes[0].Name == "name"))
             {
                 topicName = node.Attributes["name"].Value;
             }
@@ -228,7 +240,7 @@ namespace AIMLbot.Utils
         /// <returns>The node (or null)</returns>
         private XmlNode FindNode(string name, XmlNode node)
         {
-            foreach(XmlNode child in node.ChildNodes)
+            foreach (XmlNode child in node.ChildNodes)
             {
                 if (child.Name == name)
                 {
@@ -255,7 +267,7 @@ namespace AIMLbot.Utils
             string normalizedThat = "*";
             string normalizedTopic = "*";
 
-            if ((this.bot.TrustAIML)&(!isUserInput))
+            if ((this.bot.TrustAIML) & (!isUserInput))
             {
                 normalizedPattern = pattern.Trim();
                 normalizedThat = that.Trim();
@@ -343,7 +355,7 @@ namespace AIMLbot.Utils
                 result.Append(normalizedWord.Trim() + " ");
             }
 
-            return result.ToString().Replace("  "," "); // make sure the whitespace is neat
+            return result.ToString().Replace("  ", " "); // make sure the whitespace is neat
         }
         #endregion
     }
